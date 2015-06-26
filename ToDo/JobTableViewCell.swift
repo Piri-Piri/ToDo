@@ -10,6 +10,12 @@ import UIKit
 
 class JobTableViewCell: UITableViewCell {
 
+    var job: Job! {
+        didSet {
+            jobNane.setTitle(job.name, forState: .Normal)
+        }
+    }
+    
     @IBOutlet weak var jobNane: UIButton!
     @IBOutlet weak var progressImage: UIImageView!
     

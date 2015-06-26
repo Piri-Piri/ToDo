@@ -36,11 +36,12 @@ class CoreData {
         // The persistent store coordinator for the application. This implementation creates and return a coordinator, having added the store for the application to it. This property is optional since there are legitimate error conditions that could cause the creation of the store to fail.
         // Create the coordinator and store
         let coordinator = NSPersistentStoreCoordinator(managedObjectModel: self.managedObjectModel)
-        
-        
+
+        /*
         if let containerURL = NSFileManager.defaultManager().containerURLForSecurityApplicationGroupIdentifier(kAppGroup) {
-            
             let url = containerURL.URLByAppendingPathComponent("ToDoCoreData.sqlite")
+        */
+            let url = self.applicationDocumentsDirectory.URLByAppendingPathComponent("ToDoCoreData.sqlite")
             
             var failureReason = "There was an error creating or loading the application's saved data."
             do {
@@ -58,10 +59,12 @@ class CoreData {
                 NSLog("Unresolved error \(wrappedError), \(wrappedError.userInfo)")
                 abort()
             }
+        /*
         } else {
             NSLog("Unresolved error: ApplicationGroup \(kAppGroup) not avaiable.")
             abort()
         }
+        */
         
         return coordinator
         }()

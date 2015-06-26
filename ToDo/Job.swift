@@ -9,9 +9,22 @@
 import Foundation
 import CoreData
 
-@objc(Job)
 class Job: NSManagedObject {
 
-// Insert code here to add functionality to your managed object subclass
+    static func createJobWithName(name: String) -> Job {
+        let job = NSEntityDescription.insertNewObjectForEntityForName(kJobEntity, inManagedObjectContext: CoreData.sharedInstance.managedObjectContext) as! Job
+        
+        job.name = name
+        
+        CoreData.sharedInstance.saveContext()
+        
+        return job
+    }
+    
+    func delete() {
+        CoreData.sharedInstance.managedObjectContext.deleteObject(self)
+        CoreData.sharedInstance.saveContext()
+    }
 
 }
+

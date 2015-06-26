@@ -8,5 +8,7 @@
 
 import Foundation
 
-let kAppGroup = "group.de.piri-piri-ToDo"
-let kJobTableViewCell = "JobTableViewCell"
+let kAppGroup           = "group.de.piri-piri.ToDo"
+let kJobTableViewCell   = "JobTableViewCell"
+let kJobEntity          = "Job"
+let kJobOrderAttribute  = "order"
