@@ -163,11 +163,11 @@
 			children = (
 				6303F7DD1B35AC77001C6322 /* Common.swift */,
 				6303F8021B35B14E001C6322 /* CoreData.swift */,
-				6359B25A1B38737300E4EC16 /* Task+CoreDataProperties.swift */,
-				6359B25B1B38737300E4EC16 /* Job+CoreDataProperties.swift */,
 				6359B25C1B38737300E4EC16 /* DataShare+CoreDataProperties.swift */,
 				6359B25D1B38737300E4EC16 /* DataShare.swift */,
+				6359B25A1B38737300E4EC16 /* Task+CoreDataProperties.swift */,
 				6359B25E1B38737300E4EC16 /* Task.swift */,
+				6359B25B1B38737300E4EC16 /* Job+CoreDataProperties.swift */,
 				6359B25F1B38737300E4EC16 /* Job.swift */,
 				63F96FC91B359D5300AF28A4 /* ToDo.xcdatamodeld */,
 			);

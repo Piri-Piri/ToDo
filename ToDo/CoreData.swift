@@ -11,6 +11,31 @@ import CoreData
 
 private var coreDateSharedInstance = CoreData()
 class CoreData {
+
+    // MARK: - Helper 
+    
+    static func minMaxIntegerValueForEntityName(entityName: String, attributeName: String, minimum: Bool, predicate: NSPredicate = NSPredicate(value: true)) -> Int {
+        let request = NSFetchRequest(entityName: entityName)
+        request.sortDescriptors = [NSSortDescriptor(key: attributeName, ascending: minimum)]
+        request.fetchLimit = 1
+        request.predicate = predicate
+        do {
+            let object = try CoreData.sharedInstance.managedObjectContext.executeFetchRequest(request).first
+            return object!.valueForKey(attributeName)?.integerValue ?? 0
+        } catch {
+            return 0
+        }
+    }
+    
+    static func minIntegerValueForEntityName(entityName: String, attributeName: String, predicate: NSPredicate = NSPredicate(value: true)) -> Int {
+        return CoreData.minMaxIntegerValueForEntityName(entityName, attributeName: attributeName, minimum: true, predicate: predicate)
+    }
+    
+    static func maxIntegerValueForEntityName(entityName: String, attributeName: String, predicate: NSPredicate = NSPredicate(value: true)) -> Int {
+        return CoreData.minMaxIntegerValueForEntityName(entityName, attributeName: attributeName, minimum: false, predicate: predicate)
+    }
+    
+    // MARK: - Singelton
     
     class var sharedInstance: CoreData {
         return coreDateSharedInstance
