@@ -36,25 +36,22 @@ extension JobTableViewController: NSFetchedResultsControllerDelegate {
 
 class JobTableViewController: UITableViewController {
 
-    private var _fetchedResultsController: NSFetchedResultsController!
-    private var fetchedResultsController: NSFetchedResultsController! {
-        if _fetchedResultsController != nil { return _fetchedResultsController }
-        
+    private lazy var fetchedResultsController: NSFetchedResultsController! = {
         let request = NSFetchRequest(entityName: kJobEntity)
         request.sortDescriptors = [NSSortDescriptor(key: kJobOrderAttribute, ascending: true)]
         
-        _fetchedResultsController = NSFetchedResultsController(fetchRequest: request, managedObjectContext: CoreData.sharedInstance.managedObjectContext, sectionNameKeyPath: nil, cacheName: nil)
-        _fetchedResultsController.delegate = self
+        let fetchedResultsController = NSFetchedResultsController(fetchRequest: request, managedObjectContext: CoreData.sharedInstance.managedObjectContext, sectionNameKeyPath: nil, cacheName: nil)
+        fetchedResultsController.delegate = self
         
         do {
-            try _fetchedResultsController.performFetch()
+            try fetchedResultsController.performFetch()
         } catch {
             let nserror = error as NSError
             NSLog("Unresolved error \(nserror), \(nserror.userInfo)")
             abort()
         }
-        return _fetchedResultsController
-    }
+        return fetchedResultsController
+    } ()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -67,22 +64,19 @@ class JobTableViewController: UITableViewController {
 
     // MARK: - BarButtonItem actions
     
-    func addJob(job: Job) {
-        let dialog = UIAlertController(title: "Jobname", message: "Bitte geben Sie einen Jobnamen ein", preferredStyle: .Alert)
+    func addJob(sender: UIBarButtonItem) {
+        let title = NSLocalizedString("titleCreateJobDialog", tableName: nil, bundle: NSBundle.mainBundle(), value: "Create new Job", comment: "title in alertContoller")
+        let placeholder = NSLocalizedString("placeholderCreateJobDialog", tableName: nil, bundle: NSBundle.mainBundle(), value: "Job", comment: "placeholder for input textField")
+        let message = NSLocalizedString("messageCreateJobDialog", tableName: nil, bundle: NSBundle.mainBundle(), value: "Type in or dictate a jobname. Press 'Add' to save and contuine adding new jobs. Press 'Cancel' if you have complete yout list for now.", comment: "message in alertController")
+        let defaultLabel = NSLocalizedString("defaultButtonCreateJobDialog", tableName: nil, bundle: NSBundle.mainBundle(), value: "Add", comment: "default button label text")
+        let cancelLabel = NSLocalizedString("cancelButtonCreateJobDialog", tableName: nil, bundle: NSBundle.mainBundle(), value: "Cancel", comment: "cancel button label text")
         
-        dialog.addTextFieldWithConfigurationHandler { (textfield) -> Void in
-            textfield.placeholder = "Jobname"
-        }
-        
-        let cancel = UIAlertAction(title: "Abbrechen", style: .Cancel, handler: nil)
-        dialog.addAction(cancel)
-        
-        let ok = UIAlertAction(title: "Okay", style: .Default) { (action) -> Void in
-            if let textField = dialog.textFields?.first where !textField.text!.isEmpty {
-                Job.createJobWithName(textField.text!)
+        let dialog = PPHelper.singleTextFieldDialogWithTitle(title, message: message, placeholder: placeholder, textFieldValue: "", defaultLabel: defaultLabel, cancelLabel: cancelLabel) { [weak self] (text) -> Void in
+            Job.createJobWithName(text)
+            PPHelper.delayOnMainQueue(0.3) { () -> Void in
+                self!.addJob(sender)
             }
         }
-        dialog.addAction(ok)
         
         presentViewController(dialog, animated: true, completion: nil)
     }
@@ -113,5 +107,14 @@ class JobTableViewController: UITableViewController {
         }
     }
     
+    override func tableView(tableView: UITableView, willBeginEditingRowAtIndexPath indexPath: NSIndexPath) {
+        guard let jobCell = tableView.cellForRowAtIndexPath(indexPath) as? JobTableViewCell else { return }
+        jobCell.interactionAllowed = false
+    }
+
+    override func tableView(tableView: UITableView, didEndEditingRowAtIndexPath indexPath: NSIndexPath) {
+        guard let jobCell = tableView.cellForRowAtIndexPath(indexPath) as? JobTableViewCell else { return }
+        jobCell.interactionAllowed = true
+    }
     
 }
