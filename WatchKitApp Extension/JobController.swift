@@ -25,9 +25,11 @@ class JobController: WKInterfaceController {
     override func willActivate() {
         // This method is called when watch view controller is about to be visible to user
         super.willActivate()
-        reloadData()
-        dataShareTimer.invalidate()
+        
+        DataShare.deleteAllCommands()
+        dataShareTimer?.invalidate()
         dataShareTimer = NSTimer.scheduledTimerWithTimeInterval(0.5, target: self, selector: "checkDataShareForAvailableCommand", userInfo: nil, repeats: true)
+        reloadData()
     }
 
     override func didDeactivate() {

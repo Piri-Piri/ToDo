@@ -50,7 +50,9 @@ class TaskDetailController: WKInterfaceController {
     override func willActivate() {
         // This method is called when watch view controller is about to be visible to user
         super.willActivate()
-        dataShareTimer.invalidate()
+        
+        DataShare.deleteAllCommands()
+        dataShareTimer?.invalidate()
         dataShareTimer = NSTimer.scheduledTimerWithTimeInterval(0.5, target: self, selector: "checkDataShareForAvailableCommand", userInfo: nil, repeats: true)
     }
 

@@ -91,6 +91,7 @@ class JobTableViewController: UITableViewController {
         }
         
         DataShare.deleteAllCommands()
+        dataShareTimer?.invalidate()
         dataShareTimer = NSTimer.scheduledTimerWithTimeInterval(0.5, target: self, selector: "checkDataShareForAvailableCommand", userInfo: nil, repeats: true)
         
         tableView.reloadData()

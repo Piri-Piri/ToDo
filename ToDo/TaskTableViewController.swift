@@ -93,6 +93,9 @@ class TaskTableViewController: UITableViewController {
             [weak self] (notification) -> Void in
                 self?.tableView.reloadData()
         }
+        
+        DataShare.deleteAllCommands()
+        dataShareTimer?.invalidate()
         dataShareTimer = NSTimer.scheduledTimerWithTimeInterval(0.5, target: self, selector: "checkDataShareForAvailableCommand", userInfo: nil, repeats: true)
     }
     
