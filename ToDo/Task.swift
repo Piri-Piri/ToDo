@@ -11,6 +11,31 @@ import CoreData
 
 class Task: NSManagedObject {
 
-// Insert code here to add functionality to your managed object subclass
+    static func createTaskForJob(job: Job, withName name: String) -> Task {
+        let task = NSEntityDescription.insertNewObjectForEntityForName(kTaskEntity, inManagedObjectContext: CoreData.sharedInstance.managedObjectContext) as! Task
+        
+        task.job = job
+        task.name = name
+        task.completed = false
+        task.order = CoreData.minIntegerValueForEntityName(kTaskEntity, attributeName: kTaskOrderAttribute, predicate: NSPredicate(format: "job == %@", job)) - 1
+        
+        CoreData.sharedInstance.saveContext()
+        return task
+    }
+    
+    func delete() {
+        CoreData.sharedInstance.managedObjectContext.deleteObject(self)
+        CoreData.sharedInstance.saveContext()
+    }
+    
+    func switchCompleted() {
+        completed = !completed!.boolValue
+        if completed!.boolValue {
+            order = CoreData.maxIntegerValueForEntityName(kTaskEntity, attributeName: kTaskOrderAttribute, predicate: NSPredicate(format: "job == %@", job!)) + 1
+        } else {
+            order = CoreData.minIntegerValueForEntityName(kTaskEntity, attributeName: kTaskOrderAttribute, predicate: NSPredicate(format: "job == %@", job!)) - 1
+        }
+        CoreData.sharedInstance.saveContext()
+    }
 
 }

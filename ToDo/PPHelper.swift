@@ -18,7 +18,21 @@ class PPHelper {
     static func delayOnQueue(delay: NSTimeInterval, queue: dispatch_queue_t, closure: () -> Void ) {
         let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(delay * Double(NSEC_PER_SEC)))
         dispatch_after(delayTime, queue, closure)
+    }
+    
+    static func dialogWithTitle(title: String, message: String, defaultLabel: String, cancelLabel: String, defaultClosure: () -> Void) -> UIAlertController {
         
+        let controller = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+        
+        let defaultAction = UIAlertAction(title: defaultLabel, style: .Default) { (action) -> Void in
+            defaultClosure()
+        }
+        let cancelAction = UIAlertAction(title: cancelLabel, style: .Cancel, handler: nil)
+        
+        controller.addAction(defaultAction)
+        controller.addAction(cancelAction)
+        
+        return controller
     }
     
     static func singleTextFieldDialogWithTitle(title: String, message: String, placeholder: String, textFieldValue: String, defaultLabel: String, cancelLabel: String, defaultClosure: (text: String) -> Void) -> UIAlertController {

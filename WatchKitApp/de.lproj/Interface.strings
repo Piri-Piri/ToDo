@@ -1,0 +1,51 @@
+
+/* Class = "WKInterfaceLabel"; text = "Chart:"; ObjectID = "1BI-WA-phF"; */
+"1BI-WA-phF.text" = "Chart:";
+
+/* Class = "WKInterfaceLabel"; text = "Taskname:"; ObjectID = "31B-SB-w8E"; */
+"31B-SB-w8E.text" = "Taskname:";
+
+/* Class = "WKInterfaceLabel"; text = "# cmpl."; ObjectID = "87w-6h-7bv"; */
+"87w-6h-7bv.text" = "# cmpl.";
+
+/* Class = "WKInterfaceLabel"; text = "Open"; ObjectID = "AWC-oo-CEw"; */
+"AWC-oo-CEw.text" = "Open";
+
+/* Class = "WKInterfaceLabel"; text = "JobName"; ObjectID = "CfV-yo-LPB"; */
+"CfV-yo-LPB.text" = "JobName";
+
+/* Class = "WKInterfaceLabel"; text = "Alert Label"; ObjectID = "IdU-wH-bcW"; */
+"IdU-wH-bcW.text" = "Alert Label";
+
+/* Class = "WKInterfaceLabel"; text = "Job.name"; ObjectID = "P3m-nN-BiN"; */
+"P3m-nN-BiN.text" = "Job.name";
+
+/* Class = "WKInterfaceLabel"; text = "Jobname:"; ObjectID = "Tyt-QV-r1f"; */
+"Tyt-QV-r1f.text" = "Jobname:";
+
+/* Class = "WKInterfaceLabel"; text = "# open"; ObjectID = "WZu-bQ-3Kd"; */
+"WZu-bQ-3Kd.text" = "# open";
+
+/* Class = "WKInterfaceLabel"; text = "# tasks"; ObjectID = "XTC-jX-y2J"; */
+"XTC-jX-y2J.text" = "# tasks";
+
+/* Class = "WKInterfaceLabel"; text = "State:"; ObjectID = "bEM-gO-Hi8"; */
+"bEM-gO-Hi8.text" = "State:";
+
+/* Class = "WKInterfaceLabel"; text = "TaskName"; ObjectID = "fsJ-9Q-BpD"; */
+"fsJ-9Q-BpD.text" = "TaskName";
+
+/* Class = "WKInterfaceButton"; title = "Button"; ObjectID = "gCK-Ra-vUp"; */
+"gCK-Ra-vUp.title" = "Button";
+
+/* Class = "WKInterfaceLabel"; text = "Completed"; ObjectID = "lsP-9N-0kL"; */
+"lsP-9N-0kL.text" = "Completed";
+
+/* Class = "WKInterfaceLabel"; text = "Quantity"; ObjectID = "pZk-Ts-qUa"; */
+"pZk-Ts-qUa.text" = "Quantity";
+
+/* Class = "WKInterfaceLabel"; text = "Tasks:"; ObjectID = "xC5-cZ-v56"; */
+"xC5-cZ-v56.text" = "Tasks:";
+
+/* Class = "WKInterfaceLabel"; text = "Task.name"; ObjectID = "xJS-7o-IYd"; */
+"xJS-7o-IYd.text" = "Task.name";

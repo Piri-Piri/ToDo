@@ -14,6 +14,69 @@ class CoreData {
 
     // MARK: - Helper 
     
+    
+    static func managedObjectForUri(uri: NSURL) -> NSManagedObject? {
+        // ensure working with non-cached data
+        CoreData.sharedInstance.managedObjectContext.reset()
+        
+        if let objectId = CoreData.sharedInstance.persistentStoreCoordinator.managedObjectIDForURIRepresentation(uri) {
+            let managedObject = CoreData.sharedInstance.managedObjectContext.objectWithID(objectId)
+            if !managedObject.fault {
+                return managedObject
+            }
+            if let entityName = managedObject.entity.name {
+                let request = NSFetchRequest(entityName: entityName)
+                request.predicate = NSPredicate(format: "SELF == %@", objectId)
+                do {
+                    return try CoreData.sharedInstance.managedObjectContext.executeFetchRequest(request).first as? NSManagedObject
+                } catch {
+                    NSLog("\(error)")
+                }
+            }
+        }
+        return nil
+    }
+    
+    static func moveEntity(entityName: String, orderAtribute: String, source: NSManagedObject, toDestination destination: NSManagedObject, predicate: NSPredicate = NSPredicate(value: true)) {
+        guard let
+            sourceIndex = source.valueForKey(orderAtribute)?.integerValue,
+            destinationIndex = destination.valueForKey(orderAtribute)?.integerValue else { return }
+        
+        let request = NSFetchRequest(entityName: entityName)
+        if sourceIndex < destinationIndex {
+            request.sortDescriptors = [NSSortDescriptor(key: kJobOrderAttribute, ascending: false)]
+            let condition = NSPredicate(format: "\(orderAtribute) > \(sourceIndex) AND \(orderAtribute) <= \(destinationIndex)")
+            request.predicate = NSCompoundPredicate(type: .AndPredicateType, subpredicates: [condition, predicate])
+            do {
+                let objects = try CoreData.sharedInstance.managedObjectContext.executeFetchRequest(request) as? [NSManagedObject]
+                objects!.map {
+                    (object) -> NSManagedObject in
+                    object.setValue((object.valueForKey(orderAtribute)?.integerValue)! - 1, forKey: kJobOrderAttribute)
+                    return object
+                }
+            } catch {
+            
+            }
+        } else if sourceIndex > destinationIndex {
+            request.sortDescriptors = [NSSortDescriptor(key: kJobOrderAttribute, ascending: true)]
+            let condition = NSPredicate(format: "\(orderAtribute) < \(sourceIndex) AND \(orderAtribute) >= \(destinationIndex)")
+            request.predicate = NSCompoundPredicate(type: .AndPredicateType, subpredicates: [condition, predicate])
+            do {
+                let objects = try CoreData.sharedInstance.managedObjectContext.executeFetchRequest(request) as! [NSManagedObject]
+                objects.map {
+                    (object) -> NSManagedObject in
+                    object.setValue((object.valueForKey(orderAtribute)?.integerValue)! + 1, forKey: kJobOrderAttribute)
+                    return object
+                }
+            } catch {
+                
+            }
+        }
+        
+        source.setValue(destinationIndex, forKey: kJobOrderAttribute)
+        CoreData.sharedInstance.saveContext()
+    }
+    
     static func minMaxIntegerValueForEntityName(entityName: String, attributeName: String, minimum: Bool, predicate: NSPredicate = NSPredicate(value: true)) -> Int {
         let request = NSFetchRequest(entityName: entityName)
         request.sortDescriptors = [NSSortDescriptor(key: attributeName, ascending: minimum)]
@@ -67,7 +130,7 @@ class CoreData {
             let url = containerURL.URLByAppendingPathComponent("ToDoCoreData.sqlite")
         */
             let url = self.applicationDocumentsDirectory.URLByAppendingPathComponent("ToDoCoreData.sqlite")
-            
+        
             var failureReason = "There was an error creating or loading the application's saved data."
             do {
                 try coordinator.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: url, options: nil)

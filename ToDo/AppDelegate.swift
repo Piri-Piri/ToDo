@@ -16,7 +16,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        // Override point for customization after application launch.
+        UITableView.appearance().backgroundColor = kColorVeryLightGrey
+        UINavigationBar.appearance().barTintColor = KColorVanilla
+        UIView.appearance().tintColor = KColorBrown
         return true
     }
 

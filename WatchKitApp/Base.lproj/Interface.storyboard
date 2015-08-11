@@ -1,20 +1,158 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder.WatchKit.Storyboard" version="3.0" toolsVersion="8121.17" systemVersion="15A178w" targetRuntime="watchKit" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="AgC-eL-Hgc">
+<document type="com.apple.InterfaceBuilder.WatchKit.Storyboard" version="3.0" toolsVersion="8164.2" systemVersion="15A235d" targetRuntime="watchKit" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="AgC-eL-Hgc">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8101.14"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBWatchKitPlugin" version="8066.14"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8135.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBWatchKitPlugin" version="8083.2"/>
     </dependencies>
     <scenes>
-        <!--Interface Controller-->
+        <!--JobController-->
         <scene sceneID="aou-V4-d1y">
             <objects>
-                <controller id="AgC-eL-Hgc" customClass="InterfaceController" customModule="WatchKitApp" customModuleProvider="target">
+                <controller identifier="JobController" id="AgC-eL-Hgc" customClass="JobController" customModule="WatchKitApp_Extension">
                     <items>
-                        <label width="1" alignment="left" text="Label" numberOfLines="0" id="WVo-gc-YGN"/>
+                        <table alignment="left" id="Gcm-N0-gt5">
+                            <items>
+                                <tableRow identifier="JobRow" id="QTt-gp-xGJ" customClass="JobRow" customModule="WatchKitApp_Extension">
+                                    <group key="rootItem" width="1" alignment="left" id="kHg-TG-Jm6">
+                                        <items>
+                                            <label height="20" alignment="left" verticalAlignment="center" text="JobName" id="CfV-yo-LPB"/>
+                                            <button width="30" height="30" alignment="right" verticalAlignment="center" id="gcD-1Y-u5z">
+                                                <connections>
+                                                    <segue destination="9cY-Te-r8a" kind="push" identifier="TaskController" id="9hL-xn-F9w"/>
+                                                </connections>
+                                            </button>
+                                        </items>
+                                    </group>
+                                    <connections>
+                                        <outlet property="completeProgress" destination="gcD-1Y-u5z" id="Rr9-bO-7wb"/>
+                                        <outlet property="jobNameLabel" destination="CfV-yo-LPB" id="B7z-bL-mDX"/>
+                                        <segue destination="hCb-ER-pF8" kind="push" identifier="JobDetailController" id="iMJ-bG-qky"/>
+                                    </connections>
+                                </tableRow>
+                            </items>
+                        </table>
                     </items>
+                    <connections>
+                        <outlet property="jobTable" destination="Gcm-N0-gt5" id="coj-uJ-99Z"/>
+                    </connections>
                 </controller>
             </objects>
             <point key="canvasLocation" x="220" y="345"/>
+        </scene>
+        <!--JobDetailController-->
+        <scene sceneID="q8Y-sL-RBm">
+            <objects>
+                <controller identifier="JobDetailController" hidesWhenLoading="NO" id="hCb-ER-pF8" customClass="JobDetailController" customModule="WatchKitApp_Extension">
+                    <items>
+                        <label width="1" alignment="left" text="Jobname:" textAlignment="center" id="Tyt-QV-r1f"/>
+                        <label width="1" alignment="left" text="Job.name" numberOfLines="0" id="P3m-nN-BiN"/>
+                        <separator alignment="left" id="o7z-F9-aQA"/>
+                        <label width="1" alignment="left" text="Tasks:" textAlignment="center" id="xC5-cZ-v56"/>
+                        <group width="1" alignment="left" id="Efb-0J-bRY">
+                            <items>
+                                <label alignment="left" text="Quantity" id="pZk-Ts-qUa"/>
+                                <label alignment="right" text="# tasks" id="XTC-jX-y2J"/>
+                            </items>
+                        </group>
+                        <group width="1" alignment="left" id="PDN-8O-280">
+                            <items>
+                                <label alignment="left" text="Open" id="AWC-oo-CEw"/>
+                                <label alignment="right" text="# open" id="WZu-bQ-3Kd"/>
+                            </items>
+                        </group>
+                        <group width="1" alignment="left" id="Hd6-nQ-NVh">
+                            <items>
+                                <label alignment="left" text="Completed" id="lsP-9N-0kL"/>
+                                <label alignment="right" text="# cmpl." id="87w-6h-7bv"/>
+                            </items>
+                        </group>
+                        <separator alignment="left" id="QfS-xu-Ffr"/>
+                        <label width="1" alignment="left" text="Chart:" textAlignment="center" id="1BI-WA-phF"/>
+                        <button width="1" height="100" alignment="left" id="ByQ-Aa-Qei">
+                            <variation key="device=watch38mm" height="136"/>
+                            <variation key="device=watch42mm" height="156"/>
+                            <connections>
+                                <segue destination="9cY-Te-r8a" kind="push" identifier="TaskController" id="e6P-yz-dlF"/>
+                            </connections>
+                        </button>
+                    </items>
+                    <connections>
+                        <outlet property="chartButton" destination="ByQ-Aa-Qei" id="3Wn-bq-WJ6"/>
+                        <outlet property="chartTitleLabel" destination="1BI-WA-phF" id="df7-yY-KMh"/>
+                        <outlet property="completedTitleLabel" destination="lsP-9N-0kL" id="DKn-vX-ECt"/>
+                        <outlet property="completedValueLabel" destination="87w-6h-7bv" id="L18-zQ-IRd"/>
+                        <outlet property="jobNameLabel" destination="P3m-nN-BiN" id="xnt-Z7-Y7D"/>
+                        <outlet property="jobNameTitleLabel" destination="Tyt-QV-r1f" id="Nbt-ea-kjf"/>
+                        <outlet property="openTitleLabel" destination="AWC-oo-CEw" id="QTc-Wi-hTC"/>
+                        <outlet property="openValueLabel" destination="WZu-bQ-3Kd" id="ZKM-GU-SOd"/>
+                        <outlet property="quantityTitleLabel" destination="pZk-Ts-qUa" id="v2M-OW-d2z"/>
+                        <outlet property="quantityValueLabel" destination="XTC-jX-y2J" id="hwr-2l-7Pf"/>
+                        <outlet property="taskTitleLabel" destination="xC5-cZ-v56" id="WK4-ID-YD2"/>
+                    </connections>
+                </controller>
+            </objects>
+            <point key="canvasLocation" x="220" y="692.5"/>
+        </scene>
+        <!--TaskDetailController-->
+        <scene sceneID="VQg-ha-5mR">
+            <objects>
+                <controller identifier="TaskDetailController" hidesWhenLoading="NO" id="WFq-t8-zBU" customClass="TaskDetailController" customModule="WatchKitApp_Extension">
+                    <items>
+                        <label width="1" alignment="left" text="Taskname:" textAlignment="center" id="31B-SB-w8E"/>
+                        <label width="1" alignment="left" text="Task.name" textAlignment="center" numberOfLines="0" id="xJS-7o-IYd"/>
+                        <separator alignment="left" id="CMs-kP-jXd"/>
+                        <label width="1" alignment="left" text="State:" textAlignment="center" id="bEM-gO-Hi8"/>
+                        <button width="1" height="100" alignment="left" title="Button" id="gCK-Ra-vUp">
+                            <variation key="device=watch38mm" height="136"/>
+                            <variation key="device=watch42mm" height="156"/>
+                            <connections>
+                                <action selector="stateButtonAction" destination="WFq-t8-zBU" id="Eo5-SW-Obs"/>
+                            </connections>
+                        </button>
+                    </items>
+                    <connections>
+                        <outlet property="stateButton" destination="gCK-Ra-vUp" id="dXl-Y8-2u1"/>
+                        <outlet property="stateTitleLabel" destination="bEM-gO-Hi8" id="d9L-mm-WMC"/>
+                        <outlet property="taskNameLabel" destination="xJS-7o-IYd" id="cdF-Oe-B5l"/>
+                        <outlet property="taskNameTitleLabel" destination="31B-SB-w8E" id="9UG-2L-0Qa"/>
+                    </connections>
+                </controller>
+            </objects>
+            <point key="canvasLocation" x="474" y="641.5"/>
+        </scene>
+        <!--TaskController-->
+        <scene sceneID="pmP-vV-EEb">
+            <objects>
+                <controller identifier="TaskController" hidesWhenLoading="NO" id="9cY-Te-r8a" customClass="TaskController" customModule="WatchKitApp_Extension">
+                    <items>
+                        <table alignment="left" id="2XD-Tj-y8u">
+                            <items>
+                                <tableRow identifier="TaskRow" id="LJs-kF-imV" customClass="TaskRow" customModule="WatchKitApp_Extension">
+                                    <group key="rootItem" width="1" alignment="left" id="LOF-ya-YAI">
+                                        <items>
+                                            <label height="20" alignment="left" verticalAlignment="center" text="TaskName" id="fsJ-9Q-BpD"/>
+                                            <button width="30" height="30" alignment="right" verticalAlignment="center" id="QPU-Z2-pHc">
+                                                <connections>
+                                                    <action selector="completeTaskAction" destination="LJs-kF-imV" id="mGR-da-YqE"/>
+                                                </connections>
+                                            </button>
+                                        </items>
+                                    </group>
+                                    <connections>
+                                        <outlet property="completeCheck" destination="QPU-Z2-pHc" id="uhC-gH-rYG"/>
+                                        <outlet property="taskNameLabel" destination="fsJ-9Q-BpD" id="sgm-6N-hNS"/>
+                                        <segue destination="WFq-t8-zBU" kind="push" identifier="TaskDetailController" id="4pX-cr-uWh"/>
+                                    </connections>
+                                </tableRow>
+                            </items>
+                        </table>
+                    </items>
+                    <connections>
+                        <outlet property="taskTable" destination="2XD-Tj-y8u" id="6gF-Qa-i8I"/>
+                    </connections>
+                </controller>
+            </objects>
+            <point key="canvasLocation" x="474" y="345"/>
         </scene>
         <!--Static Notification Interface Controller-->
         <scene sceneID="AEw-b0-oYE">
@@ -30,14 +168,17 @@
                     </connections>
                 </notificationController>
             </objects>
-            <point key="canvasLocation" x="220" y="643"/>
+            <point key="canvasLocation" x="220" y="1020"/>
         </scene>
         <!--Notification Controller-->
         <scene sceneID="ZPc-GJ-vnh">
             <objects>
                 <controller id="4sK-HA-Art" customClass="NotificationController" customModule="WatchKitApp" customModuleProvider="target"/>
             </objects>
-            <point key="canvasLocation" x="468" y="643"/>
+            <point key="canvasLocation" x="474" y="1020"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="9hL-xn-F9w"/>
+    </inferredMetricsTieBreakers>
 </document>
